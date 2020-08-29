@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import {
-  ZoomableGroup,
   ComposableMap,
   Geographies,
   Geography
@@ -9,21 +8,10 @@ import {
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const rounded = num => {
-  if (num > 1000000000) {
-    return Math.round(num / 100000000) / 10 + "Bn";
-  } else if (num > 1000000) {
-    return Math.round(num / 100000) / 10 + "M";
-  } else {
-    return Math.round(num / 100) / 10 + "K";
-  }
-};
-
-const MapChart = ({ setTooltipContent }) => {
+const MapChart = ({ setTooltipContent, covidData }) => {
   return (
     <>
       <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
-        {/* <ZoomableGroup> */}
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map(geo => (
@@ -31,8 +19,17 @@ const MapChart = ({ setTooltipContent }) => {
                   key={geo.rsmKey}
                   geography={geo}
                   onMouseEnter={() => {
-                    const { NAME, POP_EST } = geo.properties;
-                    setTooltipContent(`${NAME} — ${rounded(POP_EST)}`);
+                    const { NAME, ISO_A3 } = geo.properties;
+                    const country = covidData.find(nation => nation.countryInfo.iso3 === ISO_A3);
+                    if(country){
+                      setTooltipContent(
+                        <>
+                          <p>{NAME}</p>
+                          <p>Cases - {country.cases}</p>
+                          <p>Deaths - {country.deaths}</p>
+                          <p>Recovered - {country.recovered}</p>
+                        </>);
+                    }
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");
@@ -55,7 +52,6 @@ const MapChart = ({ setTooltipContent }) => {
               ))
             }
           </Geographies>
-        {/* </ZoomableGroup> */}
       </ComposableMap>
     </>
   );
