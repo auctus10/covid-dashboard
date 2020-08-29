@@ -4,6 +4,8 @@ import ReactTooltip from "react-tooltip";
 import MapChart from '../map-chart';
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 const override = css`
   display: block;
@@ -31,17 +33,30 @@ const MainMap = () => {
         }
     }
 
-   if(covidData.length === 0) return  <PacmanLoader
+   if(covidData.length === 0) return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}> <PacmanLoader
     css={override}
      size={25}
      color={"white"}
      loading={true}
-   />
+   /></div>
 
     return(
         <>
-            <MapChart covidData={covidData} setTooltipContent={setContent} />
-            <ReactTooltip>{content}</ReactTooltip>
+            <Tabs>
+                <TabList>
+                <Tab>Visual Data</Tab>
+                <Tab>Tabular Data</Tab>
+                </TabList>
+    
+                <TabPanel>
+                    <MapChart covidData={covidData} setTooltipContent={setContent} />
+                    <ReactTooltip>{content}</ReactTooltip>
+                </TabPanel>
+                <TabPanel>
+                <h2>Any content 2</h2>
+                </TabPanel>
+             </Tabs>
+    
         </>
     )
 }
