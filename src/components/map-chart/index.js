@@ -2,25 +2,37 @@ import React, { memo } from "react";
 import {
   ComposableMap,
   Geographies,
-  Geography
+  Geography,
+  Sphere,
+  Graticule
 } from "react-simple-maps";
+import { scaleLinear } from "d3-scale";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+
+  const colorScale = scaleLinear()
+  .domain([1, 250000])
+  .range(["#ffedea", "#ff5233"]);
 
 const MapChart = ({ setTooltipContent, covidData }) => {
   return (
     <>
       <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
+      <Sphere stroke="#E4E5E6" strokeWidth={0.1} />
+      <Graticule stroke="#E4E5E6" strokeWidth={0.1} step={[10, 10]
+} />
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
-              geographies.map(geo => (
+              geographies.map(geo => {
+                const { NAME, ISO_A3 } = geo.properties;
+                const country = covidData.find(nation => nation.countryInfo.iso3 === ISO_A3);
+                const color = country ? colorScale(country["deaths"]) : "#F5F4F6";
+                return(
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
                   onMouseEnter={() => {
-                    const { NAME, ISO_A3 } = geo.properties;
-                    const country = covidData.find(nation => nation.countryInfo.iso3 === ISO_A3);
                     if(country){
                       setTooltipContent(
                         <>
@@ -29,6 +41,8 @@ const MapChart = ({ setTooltipContent, covidData }) => {
                           <p>Deaths - {country.deaths}</p>
                           <p>Recovered - {country.recovered}</p>
                         </>);
+                    }else{
+                      setTooltipContent(`${NAME} - Data unavailable `)
                     }
                   }}
                   onMouseLeave={() => {
@@ -36,7 +50,7 @@ const MapChart = ({ setTooltipContent, covidData }) => {
                   }}
                   style={{
                     default: {
-                      fill: "#D6D6DA",
+                      fill: color,
                       outline: "none"
                     },
                     hover: {
@@ -49,7 +63,8 @@ const MapChart = ({ setTooltipContent, covidData }) => {
                     }
                   }}
                 />
-              ))
+                )
+                })
             }
           </Geographies>
       </ComposableMap>
