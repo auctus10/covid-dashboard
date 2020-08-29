@@ -1,6 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactTooltip from "react-tooltip";
 import MapChart from '../map-chart';
+import { css } from "@emotion/core";
+import PacmanLoader from "react-spinners/PacmanLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 
 
 const MainMap = () => {
@@ -10,8 +20,6 @@ const MainMap = () => {
     useEffect(() => {
         fetchData();
     },[]);
-
-    const mapRef = useRef();
 
     const fetchData = async () => {
         try {
@@ -23,9 +31,17 @@ const MainMap = () => {
         }
     }
 
+   if(covidData.length === 0) return  <PacmanLoader
+    css={override}
+     size={25}
+     color={"white"}
+     loading={true}
+   />
+
     return(
         <>
-            <MapChart setTooltipContent={setContent} />
+            <MapChart covidData={covidData} setTooltipContent={setContent} />
+            <ReactTooltip>{content}</ReactTooltip>
         </>
     )
 }
