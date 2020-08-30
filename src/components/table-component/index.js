@@ -29,7 +29,7 @@ const TabularData = ({covidData }) => {
    return(
         <div className="table-container">
          	<h1>Reported Cases and Deaths by Country, Territory, or Conveyance</h1>
-            <Table inverted style={{marginBottom: '5rem', backgroundColor: '#332b2b'}} sortable celled fixed>
+            <Table inverted style={{ backgroundColor: '#333333', marginTop: '2rem' }} sortable celled fixed>
               <Table.Header>
                 <Table.Row>
 
