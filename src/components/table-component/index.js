@@ -29,7 +29,7 @@ const TabularData = ({covidData }) => {
    return(
         <div className="table-container">
          	<h1>Reported Cases and Deaths by Country, Territory, or Conveyance</h1>
-            <Table inverted style={{ backgroundColor: '#333333', marginTop: '2rem' }} sortable celled fixed>
+            <Table unstackable inverted style={{ backgroundColor: '#333333', marginTop: '2rem' }} sortable celled>
               <Table.Header>
                 <Table.Row>
 
@@ -126,7 +126,7 @@ const TabularData = ({covidData }) => {
           
                 </Table.Row>
               </Table.Header>
-              <Table.Body>
+              <Table.Body >
                 {data.map(({ country, cases, todayCases, deaths, todayDeaths, recovered, active, critical, casesPerOneMillion, deathsPerOneMillion, tests, testsPerOneMillion, population }) => (
                   <Table.Row key={country}>
                     <Table.Cell>{country}</Table.Cell>
