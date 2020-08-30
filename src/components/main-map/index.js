@@ -7,7 +7,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 import MapChart from '../map-chart';
-// import TabularData from '../table-component';
 
 const TabularData = React.lazy(() => import('../table-component'));
 
@@ -57,6 +56,7 @@ const MainMap = () => {
                 </TabList>
     
                 <TabPanel>
+										<h1 style={{marginTop: '5rem'}}>Map showing the death rate due to Covid - 19</h1>
                     <MapChart covidData={covidData} setTooltipContent={setContent} />
                     <ReactTooltip>{content}</ReactTooltip>
                 </TabPanel>
