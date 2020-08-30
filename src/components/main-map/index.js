@@ -7,7 +7,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 import MapChart from '../map-chart';
-// import TabularData from '../table-component';
+import DetailsModal from '../details-modal';
 
 const TabularData = React.lazy(() => import('../table-component'));
 
@@ -22,6 +22,8 @@ const override = css`
 const MainMap = () => {
     const [covidData, setCovidData] = useState([]);
     const [content, setContent] = useState("");
+    const [open, setOpen] = useState(false);
+    const [nation, setNation] = useState({});
 
     useEffect(() => {
         fetchData();
@@ -38,15 +40,17 @@ const MainMap = () => {
     }
 
     const renderLoader = () => (
-<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}> <PacmanLoader
-    css={override}
-     size={25}
-     color={"white"}
-     loading={true}
-   /></div>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}> 
+					<PacmanLoader
+						css={override}
+						size={25}
+						color={"white"}
+						loading={true}
+					/>
+				</div>
     )
 
-   if(covidData.length === 0) return renderLoader()
+	 if(covidData.length === 0) return renderLoader()
 
     return(
         <>
@@ -57,8 +61,9 @@ const MainMap = () => {
                 </TabList>
     
                 <TabPanel>
-                    <MapChart covidData={covidData} setTooltipContent={setContent} />
+                    <MapChart setNation={setNation} setOpen={setOpen} covidData={covidData} setTooltipContent={setContent} />
                     <ReactTooltip>{content}</ReactTooltip>
+										<DetailsModal open={open} setOpen={setOpen} nation={nation}  />
                 </TabPanel>
                 <TabPanel>
                     <Suspense fallback={renderLoader()}>

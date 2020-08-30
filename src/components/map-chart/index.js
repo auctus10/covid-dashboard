@@ -15,7 +15,7 @@ const geoUrl =
   .domain([1, 250000])
   .range(["#ffedea", "#ff5233"]);
 
-const MapChart = ({ setTooltipContent, covidData }) => {
+const MapChart = ({ setTooltipContent, covidData, setNation, setOpen }) => {
   return (
     <>
       <ComposableMap data-tip="" projectionConfig={{ scale: 180 }}>
@@ -46,6 +46,10 @@ const MapChart = ({ setTooltipContent, covidData }) => {
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");
+                  }}
+                  onClick={() => {
+                    setOpen(true);
+                    setNation(country);
                   }}
                   style={{
                     default: {
