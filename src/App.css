@@ -28,7 +28,7 @@
 
 .rsm-svg{
   width: 80%;
-  overflow: inherit;
+  overflow: inherit !important;
 }
 
 .react-tabs__tab--selected{

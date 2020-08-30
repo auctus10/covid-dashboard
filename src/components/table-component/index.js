@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react'
 import _ from 'lodash'
 import { Table } from 'semantic-ui-react'
-import 'rsuite-table/dist/css/rsuite-table.css';
 
 function sortReducer(state, action) {
   switch (action.type) {
