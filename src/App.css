@@ -38,3 +38,9 @@
 .react-tabs__tab-list{
   background-color: lightcoral !important; 
 }
+
+.table-container{
+  margin-top: 5rem !important;
+  width: 90%;
+  margin: auto;
+}

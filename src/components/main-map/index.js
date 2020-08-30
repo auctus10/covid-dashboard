@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import axios from 'axios';
 import ReactTooltip from "react-tooltip";
-import MapChart from '../map-chart';
 import { css } from "@emotion/core";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+
+import MapChart from '../map-chart';
+// import TabularData from '../table-component';
+
+const TabularData = React.lazy(() => import('../table-component'));
 
 const override = css`
   display: block;
@@ -25,7 +29,7 @@ const MainMap = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('https://corona.lmao.ninja/v2/countries');
+            const response = await axios.get('https://corona.lmao.ninja/v2/countries?sort=cases');
 
             setCovidData(response.data); 
         } catch (error) {
@@ -33,12 +37,16 @@ const MainMap = () => {
         }
     }
 
-   if(covidData.length === 0) return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}> <PacmanLoader
+    const renderLoader = () => (
+<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}> <PacmanLoader
     css={override}
      size={25}
      color={"white"}
      loading={true}
    /></div>
+    )
+
+   if(covidData.length === 0) return renderLoader()
 
     return(
         <>
@@ -53,10 +61,11 @@ const MainMap = () => {
                     <ReactTooltip>{content}</ReactTooltip>
                 </TabPanel>
                 <TabPanel>
-                <h2>Any content 2</h2>
+                    <Suspense fallback={renderLoader()}>
+                        <TabularData renderLoader={renderLoader()} covidData={covidData} />
+                    </Suspense>
                 </TabPanel>
              </Tabs>
-    
         </>
     )
 }
