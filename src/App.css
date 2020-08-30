@@ -28,7 +28,7 @@
 
 .rsm-svg{
   width: 80%;
-  overflow: inherit;
+  overflow: inherit !important;
 }
 
 .react-tabs__tab--selected{
@@ -37,4 +37,17 @@
 
 .react-tabs__tab-list{
   background-color: lightcoral !important; 
+}
+
+.table-container{
+  margin-top: 5rem !important;
+  width: 90%;
+  margin: auto;
+}
+
+.ui.table thead tr:first-child > th {
+  position: sticky !important;
+  top: 0;
+  z-index: 3;
+  background-color: black !important
 }

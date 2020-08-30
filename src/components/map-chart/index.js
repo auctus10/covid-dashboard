@@ -18,10 +18,9 @@ const geoUrl =
 const MapChart = ({ setTooltipContent, covidData }) => {
   return (
     <>
-      <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
+      <ComposableMap data-tip="" projectionConfig={{ scale: 180 }}>
       <Sphere stroke="#E4E5E6" strokeWidth={0.1} />
-      <Graticule stroke="#E4E5E6" strokeWidth={0.1} step={[10, 10]
-} />
+      <Graticule stroke="#E4E5E6" strokeWidth={0.1} step={[10, 10]} />
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map(geo => {
