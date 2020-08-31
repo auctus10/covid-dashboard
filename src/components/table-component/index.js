@@ -18,6 +18,10 @@ function sortReducer(state, action) {
   }
 }
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const TabularData = ({covidData }) => {
     const [state, dispatch] = useReducer(sortReducer, {
       column: null,
@@ -130,18 +134,18 @@ const TabularData = ({covidData }) => {
                 {data.map(({ country, cases, todayCases, deaths, todayDeaths, recovered, active, critical, casesPerOneMillion, deathsPerOneMillion, tests, testsPerOneMillion, population }) => (
                   <Table.Row key={country}>
                     <Table.Cell>{country}</Table.Cell>
-                    <Table.Cell>{cases}</Table.Cell>
-                    <Table.Cell>{todayCases}</Table.Cell>
-                    <Table.Cell>{deaths}</Table.Cell>
-                    <Table.Cell>{todayDeaths}</Table.Cell>
-                    <Table.Cell>{recovered}</Table.Cell>
-                    <Table.Cell>{active}</Table.Cell>
-                    <Table.Cell>{critical}</Table.Cell>
-                    <Table.Cell>{casesPerOneMillion}</Table.Cell>
-                    <Table.Cell>{deathsPerOneMillion}</Table.Cell>
-                    <Table.Cell>{tests}</Table.Cell>
-                    <Table.Cell>{testsPerOneMillion}</Table.Cell>
-                    <Table.Cell>{population}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(cases)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(todayCases)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(deaths)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(todayDeaths)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(recovered)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(active)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(critical)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(casesPerOneMillion)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(deathsPerOneMillion)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(tests)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(testsPerOneMillion)}</Table.Cell>
+                    <Table.Cell>{numberWithCommas(population)}</Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
