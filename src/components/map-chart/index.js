@@ -15,6 +15,10 @@ const geoUrl =
   .domain([1, 250000])
   .range(["#ffedea", "#ff5233"]);
 
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
 const MapChart = ({ setTooltipContent, covidData }) => {
   return (
     <>
@@ -35,10 +39,11 @@ const MapChart = ({ setTooltipContent, covidData }) => {
                     if(country){
                       setTooltipContent(
                         <>
-                          <p>{NAME}</p>
-                          <p>Cases - {country.cases}</p>
-                          <p>Deaths - {country.deaths}</p>
-                          <p>Recovered - {country.recovered}</p>
+                          <h3>{NAME}</h3>
+                          <p>Total Cases - {numberWithCommas(country.cases)}</p>
+                          <p>Total Deaths - {numberWithCommas(country.deaths)}</p>
+                          <p>Total Recovered - {numberWithCommas(country.recovered)}</p>
+                          <p>New Cases - {numberWithCommas(country.todayCases)}</p>
                         </>);
                     }else{
                       setTooltipContent(`${NAME} - Data unavailable `)
